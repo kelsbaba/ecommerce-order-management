@@ -2,6 +2,7 @@ package com.esegine.ecommerce_order_management.controller;
 
 import com.esegine.ecommerce_order_management.entity.Order;
 import com.esegine.ecommerce_order_management.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+    public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order) {
 
         Order createdOrder = orderService.createOrder(order);
         return ResponseEntity.ok(createdOrder);
@@ -38,9 +39,9 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Order> updateOrder(@PathVariable Long id,
-                                             @RequestBody Order order) {
+                                             @Valid @RequestBody Order order) {
 
         Order updatedOrder = orderService.updateOrder(id, order);
         return ResponseEntity.ok(updatedOrder);

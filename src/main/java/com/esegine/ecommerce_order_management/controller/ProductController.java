@@ -3,6 +3,7 @@ package com.esegine.ecommerce_order_management.controller;
 
 import com.esegine.ecommerce_order_management.entity.Product;
 import com.esegine.ecommerce_order_management.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
+    public Product createProduct(@Valid @RequestBody Product product) {
         return productService.createProduct(product);
     }
 
@@ -34,7 +35,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable Long id,
-                                 @RequestBody Product product) {
+                                 @Valid @RequestBody Product product) {
 
         return productService.updateProduct(id,product);
     }

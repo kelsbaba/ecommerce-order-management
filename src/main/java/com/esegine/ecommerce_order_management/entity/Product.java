@@ -5,6 +5,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
@@ -15,12 +19,17 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Product must have a name")
     private String name;
 
+    @NotBlank(message = "Product must have description")
     private String description;
 
+    @NotNull
+    @DecimalMin(value = "0.01")
     private BigDecimal price;
 
+    @Min(0)
     private int stockQuantity;
 
     public Product() {
