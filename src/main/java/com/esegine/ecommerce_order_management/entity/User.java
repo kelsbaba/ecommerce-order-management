@@ -1,12 +1,9 @@
 package com.esegine.ecommerce_order_management.entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import com.esegine.ecommerce_order_management.enums.UserRole;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -29,6 +26,11 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @NotNull(message = "User role is required")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole role = UserRole.CUSTOMER;
+
     public User() {
 
     }
@@ -37,6 +39,14 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.role = UserRole.CUSTOMER;
+    }
+
+    public User(String firstName, String lastName, String email, UserRole role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
     }
 
     public Long getId() {
@@ -69,5 +79,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

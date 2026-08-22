@@ -1,6 +1,8 @@
 package com.esegine.ecommerce_order_management.repository;
 
+
 import com.esegine.ecommerce_order_management.entity.User;
+import com.esegine.ecommerce_order_management.enums.UserRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,8 +43,25 @@ public class UserRepositoryTest {
         assertEquals("John", foundUser.get().getFirstName());
         assertEquals("Doe", foundUser.get().getLastName());
         assertEquals("john.doe@example.com", foundUser.get().getEmail());
+        assertEquals(UserRole.CUSTOMER,foundUser.get().getRole());
 
 
     }
 
+    @Test
+    void shouldSaveAndFindAdminUser() {
+        User admin = new User(
+                "Admin",
+                "User",
+                "admin@example.com",
+                UserRole.ADMIN
+        );
+
+        User savedAdmin = userRepository.save(admin);
+
+        Optional<User> foundAdmin = userRepository.findById(savedAdmin.getId());
+
+        assertTrue(foundAdmin.isPresent());
+        assertEquals(UserRole.ADMIN, foundAdmin.get().getRole());
+    }
 }
