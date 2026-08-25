@@ -138,4 +138,20 @@ public class OrderServiceTest {
         verify(orderRepository,times(1)).deleteById(orderId);
     }
 
+  /*  @Test
+    void deleteOrder_shouldThrowException_WhenOrderNotFound() {
+
+        Long orderId = 99L;
+
+        when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> orderService.deleteOrder(orderId));
+
+        assertEquals("Order not found", exception.getMessage());
+
+        verify(orderRepository).findById(orderId);
+        verify(orderRepository, never()).delete(any(Order.class));
+    }*/
+
 }

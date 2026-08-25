@@ -141,7 +141,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    void updateProduct_shouldThroExceptionWhenProductNotFound() {
+    void updateProduct_shouldThrowExceptionWhenProductNotFound() {
 
         Long productId = 99L;
 
