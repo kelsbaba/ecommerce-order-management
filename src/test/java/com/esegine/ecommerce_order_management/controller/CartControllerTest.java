@@ -79,6 +79,41 @@ public class CartControllerTest {
     }
 
     @Test
+    void getCartByUserId_shouldReturnCart() {
+        Long userId = 1L;
+        Long cartId = 1L;
+
+        User user = new User();
+        user.setId(userId);
+
+        Cart cart = new Cart(user);
+        cart.setId(cartId);
+
+        when(cartService.getCartByUserId(userId)).thenReturn(cart);
+
+        Cart result = cartController.getCartByUserId(userId);
+
+        assertNotNull(result);
+        assertEquals(userId, result.getId());
+        assertEquals(user, result.getUser());
+
+        verify(cartService).getCartByUserId(userId);
+    }
+
+    @Test
+    void getCartByUserId_shouldThrowException_whenCartNotFound() {
+        Long userId = 1L;
+
+        when(cartService.getCartByUserId(userId)).thenThrow(
+                new RuntimeException("Cart not found"));
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> cartController.getCartByUserId(userId));
+        assertEquals("Cart not found", exception.getMessage());
+
+        verify(cartService).getCartByUserId(userId);
+    }
+
+    @Test
     void getAllCarts_shouldReturnAllCarts() {
         User user1 = new User();
         user1.setId(1L);
